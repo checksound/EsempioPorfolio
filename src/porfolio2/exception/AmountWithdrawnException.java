@@ -2,11 +2,10 @@ package porfolio2.exception;
 
 public class AmountWithdrawnException extends PorfolioException {
 	
-	private int amount;
 	private int balance;
 	
 	public AmountWithdrawnException(int amount, int balance) {
-		this.amount = amount;
+		super(amount);
 		this.balance = balance;
 	}
 

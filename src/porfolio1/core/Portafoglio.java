@@ -1,8 +1,8 @@
 package porfolio1.core;
 
-import porfolio1.exception.DailyLimitException;
-import porfolio1.exception.PorfolioException;
-import porfolio1.exception.PorfolioLimitException;
+import porfolio1.exception.DailyWithdrawnLimitException;
+import porfolio1.exception.AmountWithdrawnException;
+import porfolio1.exception.SingleWithdrawnLimitException;
 
 public class Portafoglio {
 	
@@ -44,26 +44,28 @@ public class Portafoglio {
 	 * 
 	 * @param value
 	 * @return la disponibilità ad operazione avvenuta
-	 * @throws PorfolioException se la disponibilità è < della richiesta di 
+	 * @throws AmountWithdrawnException se la disponibilità è < della richiesta di 
 	 * prelievo.
+	 * @throws SingleWithdrawnLimitException
+	 * @throws DailyWithdrawnLimitException
 	 * 
 	 */
-	public int preleva(int value) throws PorfolioException, 
-		PorfolioLimitException, DailyLimitException {
+	public int preleva(int value) throws AmountWithdrawnException, 
+		SingleWithdrawnLimitException, DailyWithdrawnLimitException {
 		
 		if(this.SINGLE_WITHDRAWAL_LIMIT< value)
-			throw new PorfolioLimitException("Non si può prelevare più di: " + 
+			throw new SingleWithdrawnLimitException("Non si può prelevare più di: " + 
 					this.SINGLE_WITHDRAWAL_LIMIT + ", non è possibile prelevare: " 
 					+ value);
 		
 		if(this.DAYLY_WITHDRAWAL_LIMIT < 
 				this.prelievoGiornaliero + value)
-			throw new DailyLimitException("Impossibile superare il limite prelievo giornaliero: " 
+			throw new DailyWithdrawnLimitException("Impossibile superare il limite prelievo giornaliero: " 
 					+ this.DAYLY_WITHDRAWAL_LIMIT + ", già prelevati: " 
 					+ this.prelievoGiornaliero);
 		
 		if(this.disponibilita < value) 
-			throw new PorfolioException("Disponiblità: " + this.disponibilita 
+			throw new AmountWithdrawnException("Disponiblità: " + this.disponibilita 
 					+ " < richiesta prelievo: " + value);
 		
 		this.disponibilita -= value;

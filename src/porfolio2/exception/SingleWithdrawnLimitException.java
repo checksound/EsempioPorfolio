@@ -2,11 +2,10 @@ package porfolio2.exception;
 
 public class SingleWithdrawnLimitException extends PorfolioException {
 	
-	private int amount;
 	private int limit;
 	
 	public SingleWithdrawnLimitException(int amount, int limit) {
-		this.amount = amount;
+		super(amount);
 		this.limit = limit;
 	}
 

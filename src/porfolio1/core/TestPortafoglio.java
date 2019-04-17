@@ -2,20 +2,20 @@ package porfolio1.core;
 
 import static java.lang.System.out;
 
-import porfolio1.exception.DailyLimitException;
-import porfolio1.exception.PorfolioException;
-import porfolio1.exception.PorfolioLimitException;
+import porfolio1.exception.DailyWithdrawnLimitException;
+import porfolio1.exception.AmountWithdrawnException;
+import porfolio1.exception.SingleWithdrawnLimitException;
 
 public class TestPortafoglio {
 	
 	public static int preleva(Portafoglio portafoglio, int quantita) {
 		try {
 			return portafoglio.preleva(quantita);
-		} catch (PorfolioException e) {
+		} catch (AmountWithdrawnException e) {
 			System.out.println("PortafoglioException: " + e.getMessage());
-		} catch (PorfolioLimitException e) {
+		} catch (SingleWithdrawnLimitException e) {
 			System.out.println("PorfolioLimitException: " + e.getMessage());
-		} catch (DailyLimitException e) {
+		} catch (DailyWithdrawnLimitException e) {
 			System.out.println("DailyLimitException: " + e.getMessage());
 		}
 		
