@@ -1,8 +1,9 @@
-package porfolio1.core;
+package porfolio1.test;
 
 import static java.lang.System.out;
 
 import porfolio1.exception.DailyWithdrawnLimitException;
+import porfolio1.core.Portafoglio;
 import porfolio1.exception.AmountWithdrawnException;
 import porfolio1.exception.SingleWithdrawnLimitException;
 

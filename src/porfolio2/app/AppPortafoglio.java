@@ -6,11 +6,9 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import porfolio2.core.Portafoglio;
-import porfolio2.exception.DailyWithdrawnLimitException;
 import porfolio2.exception.PorfolioException;
-import porfolio2.exception.SingleWithdrawnLimitException;
 
-public class AppPortafoglo {
+public class AppPortafoglio {
 	
 	private static void statusPortafoglio(Portafoglio portafoglio) {
 		
@@ -139,13 +137,9 @@ public class AppPortafoglo {
 					
 					try {
 						portafoglio.preleva(quantita);
-					} catch (SingleWithdrawnLimitException e) {
-						System.out.println(e.getMessage());
-					} catch (DailyWithdrawnLimitException e) {
-						System.out.println(e.getMessage());
 					} catch (PorfolioException e) {
 						System.out.println(e.getMessage());
-					}
+					} 
 					
 					break;
 			}

@@ -5,7 +5,7 @@ package porfolio2.exception;
  * @author cam
  *
  */
-public class PorfolioException extends Exception {
+public abstract class PorfolioException extends Exception {
 	
 	protected final int amount;
 	

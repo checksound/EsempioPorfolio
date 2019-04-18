@@ -1,4 +1,4 @@
-package porfolio1.core;
+package porfolio1.test;
 
 public class TestException extends Exception {
 	
