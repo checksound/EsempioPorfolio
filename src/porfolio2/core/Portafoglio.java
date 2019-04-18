@@ -37,14 +37,19 @@ public class Portafoglio {
 		this.DAYLY_WITHDRAWAL_LIMIT = daylyWithdrawalLimit;
 	}
 	
-	private int getSumPrelievoInRange(long now, long range) {
+	/**
+	 * 
+	 * @param now - timestamp del momento attuale 
+	 * @return - la somma dei prelievi nel RANGE rispetto al momento attuale
+	 */
+	private int getSumPrelievoInRange(long now) {
 		int prelievoInRange = 0;
 		
 		ListIterator<Prelievo> lIterator = 
 				listPrelievi.listIterator(listPrelievi.size());
 		while(lIterator.hasPrevious()) {
 			Prelievo elem = lIterator.previous();
-			if(elem.timestamp < now - range) {
+			if(elem.timestamp < now - RANGE) {
 				break;
 			}
 			
@@ -76,7 +81,7 @@ public class Portafoglio {
 			throw new SingleWithdrawnLimitException(amount, this.SINGLE_WITHDRAWAL_LIMIT);
 		
 		if(this.DAYLY_WITHDRAWAL_LIMIT < 
-				getSumPrelievoInRange(System.currentTimeMillis(), RANGE) + amount)
+				getSumPrelievoInRange(System.currentTimeMillis()) + amount)
 			throw new DailyWithdrawnLimitException(amount, getPrelievoGiornaliero());
 		
 		if(this.disponibilita < amount) 
@@ -93,7 +98,7 @@ public class Portafoglio {
 	}
 	
 	public int getPrelievoGiornaliero() {
-		return getSumPrelievoInRange(System.currentTimeMillis(), RANGE);
+		return getSumPrelievoInRange(System.currentTimeMillis());
 	}
 
 	public List<Prelievo> getListPrelievi() {

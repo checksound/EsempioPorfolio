@@ -22,16 +22,16 @@ public class AppPortafoglio {
 	}
 
 	private static void menu() {
-		System.out.println("Esegui operazioni portafoglio:");
-		System.out.println("Digita 1 per versare;");
-		System.out.println("Digita 2 per prelevare;");
-		System.out.println("Digita 3 per stato conto;");
-		System.out.println("Digita 4 per uscire;");
-		System.out.println("Operazione?");
+		out.println("Esegui operazioni portafoglio:");
+		out.println("* Digita 1 per versare;");
+		out.println("* Digita 2 per prelevare;");
+		out.println("* Digita 3 per stato conto;");
+		out.println("* Digita 4 per uscire;");
+		out.println("Operazione?");
 	}
 	
 	private static int menuVersamento(Scanner scanner) {
-		System.out.println("Quanto vuoi versare?");
+		out.println("Quanto vuoi versare?");
 		
 		int quantita = 0;
 		
@@ -44,12 +44,12 @@ public class AppPortafoglio {
 		}
 		
 		if(isError) {
-			System.out.println("Errore: Devi digitare un numero come quantità da versare");
+			out.println("Errore: Devi digitare un numero come quantità da versare");
 			return menuVersamento(scanner);
 		}
 		
 		if(quantita < 0) {
-			System.out.println("La quantità deve essere positiva");
+			out.println("La quantità deve essere positiva");
 			return menuVersamento(scanner);
 		}
 		
@@ -57,7 +57,7 @@ public class AppPortafoglio {
 	}
 	
 	private static int menuPrelievo(Scanner scanner) {
-		System.out.println("Quanto vuoi prelevare?");
+		out.println("Quanto vuoi prelevare?");
 		int quantita = 0;
 		
 		boolean isError = false;
@@ -69,12 +69,12 @@ public class AppPortafoglio {
 		}
 		
 		if(isError) {
-			System.out.println("Errore: Devi digitare un numero come quantità da prelevare");
+			out.println("Errore: Devi digitare un numero come quantità da prelevare");
 			return menuPrelievo(scanner);
 		}
 		
 		if(quantita < 0) {
-			System.out.println("La quantità deve essere positiva");
+			out.println("La quantità deve essere positiva");
 			return menuPrelievo(scanner);
 		}
 		
@@ -101,13 +101,13 @@ public class AppPortafoglio {
 			}
 			
 			if(isError) {
-				System.out.println("Errore: Devi digitare un numero per scegliere l'opzione");
+				out.println("Errore: Devi digitare un numero per scegliere l'opzione");
 				menu();
 				continue;
 			}
 			
 			if (opzione != 1 && opzione != 2 && opzione != 3 && opzione != 4) {
-				System.out.println("Opzione non valida");
+				out.println("Opzione non valida");
 				menu();
 				continue;
 			}
@@ -121,7 +121,7 @@ public class AppPortafoglio {
 			
 			if(opzione == 4) {
 				// exit
-				System.out.println("Applicazione terminata");
+				out.println("Applicazione terminata");
 				break;
 			}
 			
@@ -131,14 +131,18 @@ public class AppPortafoglio {
 				case 1:
 					quantita = menuVersamento(scanner);
 					portafoglio.versa(quantita);
+					
+					out.println("OK versamento: " + quantita);
 					break;
 				case 2:
 					quantita = menuPrelievo(scanner);
 					
 					try {
 						portafoglio.preleva(quantita);
+						
+						out.println("OK prelievo: " + quantita);
 					} catch (PorfolioException e) {
-						System.out.println(e.getMessage());
+						out.println("ERRORE su prelievo: " + e.getMessage());
 					} 
 					
 					break;
