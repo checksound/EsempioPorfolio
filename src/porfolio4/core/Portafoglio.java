@@ -14,7 +14,7 @@ public class Portafoglio {
 	
 	public static final long RANGE = 2 * 60 * 1000;
 	
-	private List<Operazione> listOperazioni = new ArrayList<Operazione>();
+	private final List<Operazione> listOperazioni = new ArrayList<Operazione>();
 	
 	private int disponibilita;
 	
@@ -43,6 +43,30 @@ public class Portafoglio {
 		
 		
 	}
+	
+	public Portafoglio(List<Operazione> listOperazioni) {
+		this(listOperazioni, 500, 1500);
+	}
+	
+	public Portafoglio(List<Operazione> listOperazioni, 
+			int singleWithdrawalLimit, int daylyWithdrawalLimit) {
+		
+		for (Operazione operazione: listOperazioni) {
+			if(operazione.operationType == OperationType.VERSAMENTO) {
+				disponibilita += operazione.quantita;
+			} else if(operazione.operationType == OperationType.PRELIEVO) {
+				disponibilita -= operazione.quantita;
+			}	
+			
+			this.listOperazioni.add(operazione);
+		}
+		
+		this.SINGLE_WITHDRAWAL_LIMIT = singleWithdrawalLimit;
+		this.DAYLY_WITHDRAWAL_LIMIT = daylyWithdrawalLimit;
+		
+		
+	}
+	
 	
 	/**
 	 * 

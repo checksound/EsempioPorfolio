@@ -5,11 +5,14 @@ import static java.lang.System.out;
 import java.io.File;
 import java.io.IOException;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
+import porfolio4.core.Operazione;
 import porfolio4.core.Portafoglio;
+import porfolio4.exception.ParsingFormatException;
 import porfolio4.exception.PorfolioException;
-import porfolio4.util.OperationsOnFilePersistent;
+import porfolio4.util.PorfolioOnFile;
 
 public class AppPortafoglio {
 	
@@ -94,30 +97,41 @@ public class AppPortafoglio {
 
         File userHomeDirectory = new File( System.getProperty("user.home") );
         File dataFile = new File( userHomeDirectory, DATA_FILE_NAME );
-
-
-        /* If the data file already exists, then the data in the file is
-         * read and is used to initialize the phone directory.  The format
-         * of the file must be as follows:  Each line of the file represents
-         * one directory entry, with the name and the number for that entry
-         * separated by the character '%'.  If a file exists but does not
-         * have this format, then the program terminates; this is done to
-         * avoid overwriting a file that is being used for another purpose.
-         */
-
+      
+        List<Operazione> listOperations = null;
+        
+        PorfolioOnFile pers = 
+        		new PorfolioOnFile(dataFile);
+        
         if ( ! dataFile.exists() ) {
-            System.out.println("No phone book data file found.  A new one");
-            System.out.println("will be created, if you add any entries.");
-            System.out.println("File name:  " + dataFile.getAbsolutePath());
+            out.println("No phone book data file found.  A new one");
+            out.println("will be created, if you add any entries.");
+            out.println("File name:  " + dataFile.getAbsolutePath());
         }
         else {
-            System.out.println("Reading phone book data...");
+            out.println("Reading phone book data...");
+            
+            try {
+    			listOperations = pers.readFromFile();
+    		} catch (IOException e1) {
+    			// TODO Auto-generated catch block
+    			e1.printStackTrace();
+    		} catch (ParsingFormatException e1) {
+    			// TODO Auto-generated catch block
+    			e1.printStackTrace();
+    		}
         }
         
-        OperationsOnFilePersistent pers = 
-        		new OperationsOnFilePersistent(dataFile);
+
+        
+        out.println("OPERATIONS: " + listOperations);
+        
+		Portafoglio portafoglio = null;
 		
-		Portafoglio portafoglio = new Portafoglio();
+		if(listOperations == null)
+			portafoglio = new Portafoglio();
+		else
+			portafoglio = new Portafoglio(listOperations);
 		
 		Scanner scanner = new Scanner(System.in);
 		

@@ -17,11 +17,11 @@ import porfolio4.core.OperationType;
 import porfolio4.core.Operazione;
 import porfolio4.exception.ParsingFormatException;
 
-public class OperationsOnFilePersistent {
+public class PorfolioOnFile {
 	
 	private File dataFile;
 	
-	public OperationsOnFilePersistent(File dataFile) {
+	public PorfolioOnFile(File dataFile) {
 		this.dataFile = dataFile;
 	}
 	
