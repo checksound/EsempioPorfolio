@@ -115,7 +115,8 @@ public class PorfolioOnFile {
 	    }
 	    
 	    if(counter != 3) {
-	    	throw new ParsingFormatException();
+	    	throw new ParsingFormatException("ERROR line: " + porfolioEntry + 
+	    			", invalid format - missing token");
 	    }
 	    
 	    //parsing operation type 
@@ -126,7 +127,8 @@ public class PorfolioOnFile {
 	    } else if(operationString.equals("PRELIEVO")) {
 	    	operationType = OperationType.PRELIEVO;
 	    } else {
-	    	throw new ParsingFormatException();
+	    	throw new ParsingFormatException("ERROR line: " + porfolioEntry + 
+	    			", invalid operation name");
 	    }
 	    
 	    // parsing quantita
@@ -136,7 +138,9 @@ public class PorfolioOnFile {
 	    try {
 	      quantita = Integer.parseInt(valueString);
 	    } catch (NumberFormatException e) {
-	    	throw new ParsingFormatException();
+	    	throw new ParsingFormatException("ERROR line: " + porfolioEntry + 
+	    			", invalid format amount value: " + valueString + 
+	    			", not integer.");
 	    }
 	    
 	    // parse date
@@ -150,7 +154,8 @@ public class PorfolioOnFile {
 			Date date = formatter.parse(dateString);
 			timestamp = date.getTime();
 		} catch (ParseException e) {
-			throw new ParsingFormatException();
+			throw new ParsingFormatException("ERROR line: " + porfolioEntry + 
+	    			", invalid format date value: " + dateString);
 		}
 		
 		return new Operazione(operationType, quantita, timestamp);

@@ -16,6 +16,8 @@ import porfolio4.util.PorfolioOnFile;
 
 public class AppPortafoglio {
 	
+	private static boolean isPorfolioModified = false;
+	
 	private static String DATA_FILE_NAME = ".porfolio";
 	
 	private static void statusPortafoglio(Portafoglio portafoglio) {
@@ -103,28 +105,22 @@ public class AppPortafoglio {
         PorfolioOnFile pers = 
         		new PorfolioOnFile(dataFile);
         
-        if ( ! dataFile.exists() ) {
-            out.println("No phone book data file found.  A new one");
+        if (!dataFile.exists()) {
+            out.println("No porfolio data file found.  A new one");
             out.println("will be created, if you add any entries.");
             out.println("File name:  " + dataFile.getAbsolutePath());
         }
         else {
-            out.println("Reading phone book data...");
+            out.println("Reading porfolio data...");
             
             try {
     			listOperations = pers.readFromFile();
     		} catch (IOException e1) {
-    			// TODO Auto-generated catch block
-    			e1.printStackTrace();
+    			System.err.println("IOException: " + e1.getMessage());
     		} catch (ParsingFormatException e1) {
-    			// TODO Auto-generated catch block
-    			e1.printStackTrace();
+    			System.err.println("ParsingFormatException: " + e1.getMessage());
     		}
         }
-        
-
-        
-        out.println("OPERATIONS: " + listOperations);
         
 		Portafoglio portafoglio = null;
 		
@@ -169,12 +165,15 @@ public class AppPortafoglio {
 			
 			if(opzione == 4) {
 				// exit
-				out.println("SALVATAGGIO DATI");
-				try {
-					pers.writeToFile(portafoglio.getListOperazioni());
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				
+				if(isPorfolioModified) {
+					out.println("SALVATAGGIO DATI");
+					try {
+						pers.writeToFile(portafoglio.getListOperazioni());
+					} catch (IOException e) {
+						System.err.println("IOException saving - " 
+								+ e.getMessage());						
+					}
 				}
 				out.println("Applicazione terminata");
 				break;
@@ -187,6 +186,8 @@ public class AppPortafoglio {
 					quantita = menuVersamento(scanner);
 					portafoglio.versa(quantita);
 					
+					isPorfolioModified = true;
+					
 					out.println("OK versamento: " + quantita);
 					break;
 				case 2:
@@ -195,9 +196,11 @@ public class AppPortafoglio {
 					try {
 						portafoglio.preleva(quantita);
 						
+						isPorfolioModified = true;
+						
 						out.println("OK prelievo: " + quantita);
 					} catch (PorfolioException e) {
-						out.println("ERRORE su prelievo: " + e.getMessage());
+						System.err.println("ERRORE su prelievo: " + e.getMessage());
 					} 
 					
 					break;
