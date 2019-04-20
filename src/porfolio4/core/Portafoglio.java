@@ -22,26 +22,7 @@ public class Portafoglio {
 	public final int DAYLY_WITHDRAWAL_LIMIT;
 	
 	public Portafoglio() {
-		this(0, 500, 1500);
-	}
-	
-	public Portafoglio(int singleWithdrawalLimit, int daylyWithdrawalLimit) {
-		this(0, singleWithdrawalLimit, daylyWithdrawalLimit);
-	}
-	
-	public Portafoglio(int amount, 
-			int singleWithdrawalLimit, int daylyWithdrawalLimit) {
-		
-		if(amount < 0)
-			throw new IllegalArgumentException("Errore, amount: " + amount + " < 0");
-		
-		if(amount!= 0) 
-			versa(amount);
-		
-		this.SINGLE_WITHDRAWAL_LIMIT = singleWithdrawalLimit;
-		this.DAYLY_WITHDRAWAL_LIMIT = daylyWithdrawalLimit;
-		
-		
+		this(new ArrayList<Operazione>(), 500, 1500);
 	}
 	
 	public Portafoglio(List<Operazione> listOperazioni) {

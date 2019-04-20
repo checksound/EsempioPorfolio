@@ -102,7 +102,7 @@ public class AppPortafoglio {
       
         List<Operazione> listOperations = null;
         
-        PorfolioOnFile pers = 
+        PorfolioOnFile dataPorfolioFile = 
         		new PorfolioOnFile(dataFile);
         
         if (!dataFile.exists()) {
@@ -114,7 +114,7 @@ public class AppPortafoglio {
             out.println("Reading porfolio data...");
             
             try {
-    			listOperations = pers.readFromFile();
+    			listOperations = dataPorfolioFile.readFromFile();
     		} catch (IOException e1) {
     			System.err.println("IOException: " + e1.getMessage());
     		} catch (ParsingFormatException e1) {
@@ -169,7 +169,7 @@ public class AppPortafoglio {
 				if(isPorfolioModified) {
 					out.println("SALVATAGGIO DATI");
 					try {
-						pers.writeToFile(portafoglio.getListOperazioni());
+						dataPorfolioFile.writeToFile(portafoglio.getListOperazioni());
 					} catch (IOException e) {
 						System.err.println("IOException saving - " 
 								+ e.getMessage());						
