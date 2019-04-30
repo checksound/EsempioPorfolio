@@ -20,7 +20,7 @@ public class Prelievo {
 		date.setTime(timestamp);
 		
 		SimpleDateFormat formatter = new SimpleDateFormat(
-                "dd.MM.yy-hh:mm:ss", 
+                "dd.MM.yy-HH:mm:ss", 
                 Locale.ITALIAN);
 		
 		return "P [qt=" + quantita + ", dt='" + formatter.format(date) + "']";
